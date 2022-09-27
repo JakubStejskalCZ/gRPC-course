@@ -30,7 +30,13 @@ func main() {
 		log.Fatalf("Failed to listen: %v\n", err)
 	}
 
-	defer listener.Close()
+	defer func() {
+		log.Println("Closing listener")
+
+		if err := listener.Close(); err != nil {
+			log.Fatalf("Failed to close listener: %v\n", err)
+		}
+	}()
 
 	opts := []grpc.ServerOption{}
 
@@ -53,13 +59,7 @@ func main() {
 	log.Println("Starting gRPC server...")
 
 	server := grpc.NewServer(opts...)
-
-	log.Println("Registering ProductsServiceServer...")
-
 	pb.RegisterProductsServiceServer(server, &Server{})
-
-	log.Println("Reflection enabled...")
-
 	reflection.Register(server)
 
 	log.Printf("Listening at %s\n", addr)
