@@ -13,7 +13,6 @@ import (
 
 type Server struct {
 	pb.ProductsServiceServer
-	config util.Config
 }
 
 func main() {
@@ -33,11 +32,12 @@ func main() {
 
 	defer listener.Close()
 
-	log.Printf("Listening at %s\n", addr)
-
 	opts := []grpc.ServerOption{}
 
 	tls := config.Tls
+
+	log.Printf("TLS: %t\n", tls)
+
 	if tls {
 		certFile := "ssl/server.crt"
 		keyFile := "ssl/server.pem"
@@ -46,17 +46,25 @@ func main() {
 		if err != nil {
 			log.Fatalf("Failed loading certificates: %v\n", err)
 		}
+
 		opts = append(opts, grpc.Creds(creds))
 	}
 
+	log.Println("Starting gRPC server...")
+
 	server := grpc.NewServer(opts...)
-	pb.RegisterProductsServiceServer(server, &Server{
-		config: config,
-	})
+
+	log.Println("Registering ProductsServiceServer...")
+
+	pb.RegisterProductsServiceServer(server, &Server{})
+
+	log.Println("Reflection enabled...")
 
 	reflection.Register(server)
 
+	log.Printf("Listening at %s\n", addr)
+
 	if err = server.Serve(listener); err != nil {
-		log.Fatalf("failed to serve: %v\n", err)
+		log.Fatalf("Failed to serve: %v\n", err)
 	}
 }
