@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package products;
+
+option go_package = "github.com/JakubStejskalCZ/gRPC-course/products/proto";
+
+message Image {
+    string filename = 1;
+    string data = 2;
+}

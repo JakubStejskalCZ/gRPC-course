@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package products;
+
+import "get_products.proto";
+import "get_product.proto";
+import "update_product.proto";
+import "delete_product.proto";
+import "create_product.proto";
+
+option go_package = "github.com/JakubStejskalCZ/gRPC-course/products/proto";
+
+service ProductsService {
+    rpc GetProducts (GetProductsRequest) returns (GetProductsResponse) {}
+    rpc GetProduct (GetProductRequest) returns (GetProductResponse) {}
+    rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse) {}
+    rpc DeleteProduct (DeleteProductRequest) returns (DeleteProductResponse) {}
+    rpc UpdateProduct (UpdateProductRequest) returns (UpdateProductResponse) {}
+}

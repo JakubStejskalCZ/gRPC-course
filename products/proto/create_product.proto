@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package products;
+
+import "product.proto";
+
+option go_package = "github.com/JakubStejskalCZ/gRPC-course/products/proto";
+
+message CreateProductRequest {
+    Product product = 1;
+}
+
+message CreateProductResponse {
+    Product product = 1;
+}

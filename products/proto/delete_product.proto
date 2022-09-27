@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package products;
+
+option go_package = "github.com/JakubStejskalCZ/gRPC-course/products/proto";
+
+message DeleteProductRequest {
+    string uuid = 1;
+}
+
+message DeleteProductResponse {
+    
+}

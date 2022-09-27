@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package products;
+
+import "image.proto";
+
+option go_package = "github.com/JakubStejskalCZ/gRPC-course/products/proto";
+
+message Product {
+    string uuid = 1;
+    string name = 2;
+    string description = 3;
+    float price = 4;
+    repeated Image image = 5;
+    string url = 6;
+    string ean = 7;
+}
